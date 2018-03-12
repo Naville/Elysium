@@ -1,7 +1,7 @@
 //clang -shared -undefined dynamic_lookup -o /Applications/BaiduNetdisk_mac.app/Contents/MacOS/libPCS.dylib PCS.m
 //optool install -c load -p @executable_path/libPCS.dylib -t /Applications/BaiduNetdisk_mac.app/Contents/MacOS/BaiduNetdisk_mac
 /*
-  Their macOS client's download speed pretty much sucks even with an legitimate premium account.
+  Their macOS client's download speed pretty much sucks even with a legitimate premium account.
   That's not very surprising since Baidu sucks dick anyway.
   ██████╗ ███████╗ █████╗ ██████╗     ██████╗  █████╗ ██╗██████╗ ██╗   ██╗
   ██╔══██╗██╔════╝██╔══██╗██╔══██╗    ██╔══██╗██╔══██╗██║██╔══██╗██║   ██║
@@ -16,7 +16,7 @@
   ╚════██║██║   ██║██║     ██╔═██╗     ██║╚██╔╝██║  ╚██╔╝      ██║     ██║   ██║██║     ██╔═██╗
   ███████║╚██████╔╝╚██████╗██║  ██╗    ██║ ╚═╝ ██║   ██║       ╚██████╗╚██████╔╝╚██████╗██║  ██╗
   ╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝    ╚═╝     ╚═╝   ╚═╝        ╚═════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝
-                                                                                                
+
 
 */
 #import <objc/runtime.h>
