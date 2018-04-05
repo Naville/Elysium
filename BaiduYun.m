@@ -49,7 +49,7 @@ static void fool() {
   method_setImplementation(m4,(IMP)getRekt);
   Method m5 = class_getInstanceMethod(NSClassFromString(@"BDUser"),NSSelectorFromString(@"isSVip"));
   method_setImplementation(m5,(IMP)ISVIP);
-  if(m1!=NULL&&m2!=NULL&&m3!=NULL&&m4!=NULL&&m5!=NULL){
+  if(m1!=NULL&&m2!=NULL&&m3!=NULL&&m4!=NULL&&m5!=NULL&&request_increaseBytesTransferred!=NULL&&setMaxBytesPerSecond!=NULL){
     NSLog(@"Inj3ct3d");
   }
 }
