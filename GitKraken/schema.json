@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GKLicenseDat_Observed",
+  "description": "Observed license JSON schema reconstructed from local code path; values not mentioned are not consumed by local license flow unless explicitly read.",
+  "type": "object",
+  "required": [
+    "expiresAt"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "expiresAt": {
+      "type": ["string", "number", "null"],
+      "description": "Only field read by local license expiry checks: licenseIsExpired( U.sanitizeDate(e.expiresAt) )."
+    },
+
+    "features": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Cloud license payload candidate; written to app registration userFeatures in some cloud flows."
+    },
+    "licensedFeatures": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "enterprise",
+          "enterpriseTrial",
+          "pro",
+          "student",
+          "advanced",
+          "teamsLicense",
+          "trial",
+          "unregisteredTrial"
+        ]
+      },
+      "description": "Feature flags list used by entitlement checks (e.g., pro/enterprise/trial/team/license tiers)."
+    },
+    "licenseExpiresAt": {
+      "type": ["string", "number", "null"],
+      "description": "Cloud payload field name for expiry date in non-standalone responses."
+    },
+    "guid": { "type": "string", "description": "User/license guid in cloud payloads." },
+    "id": { "type": "string", "description": "User id in cloud payloads." },
+    "email": { "type": "string", "format": "email" },
+    "name": { "type": "string" },
+    "eulaVersion": { "type": "string" },
+
+    "status": {
+      "type": "string",
+      "enum": [
+        "activated",
+        "pending",
+        "unregistered",
+        "registration_failed",
+        "trial",
+        "expired",
+        "invalid",
+        "missing"
+      ],
+      "description": "Observed status values in constants and status mapping code; may appear in cloud/registration payloads."
+    },
+
+    "proAccessState": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "trial": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "isOrgTrial": { "type": "boolean" },
+            "start": { "type": ["string", "number", "null"] },
+            "end": { "type": ["string", "number", "null"] },
+            "canCreateOrgTrial": { "type": "boolean" }
+          },
+          "description": "AccessState consumers in selectors read trial.start, trial.end, trial.isOrgTrial, trial.canCreateOrgTrial."
+        }
+      },
+      "description": "Stored as accessState in registration/shared state."
+    },
+    "whitelist": {
+      "type": ["string", "null", "array"],
+      "description": "MD5 whitelist string from server; used to update public repo domain whitelist settings."
+    },
+    "isOrgTrialOwner": { "type": "boolean" },
+    "availableTrialDays": { "type": ["number", "null"] },
+    "loginType": { "type": "string" },
+    "registration": {
+      "type": "object",
+      "description": "Not decoded inside local standalone parser directly, but appears across auth payload handling in app logic.",
+      "additionalProperties": true,
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["activated", "pending", "unregistered", "registration_failed"]
+        },
+        "loginType": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "EULA": {
+          "type": "object",
+          "properties": {
+            "status": { "type": "string" },
+            "version": { "type": "string" }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "accessToken": {
+      "type": "string",
+      "description": "Seen in registration/login flow payload handling; not a standalone-license-file field in main parse flow."
+    }
+  },
+
+  "x_fields_actually_read_in_local_standalone_flow": [
+    "expiresAt"
+  ],
+  "x_fields_not_required_by_current_parser": [
+    "all fields except expiresAt are passthrough-only in local standalone update path"
+  ]
+}
