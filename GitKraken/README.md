@@ -15,12 +15,15 @@ openssl rsa -in private_key.pem -pubout -out public_key.pem
 - `npm install -g asar`
 - `cp GitKraken/app.asar GK/app.asar`
 - `cp -r GitKraken/app.asar.unpacked GK/app.asar.unpacked`
+- `asar extract GK/app.asar GK/app`
 
 ## Replace the Public Key
 
 ```bash
 export PUBLIC_KEY_ORIG=LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF3T29KZ2xHTk9URlF4eG9aU1ZqMApsc0JJRjRiYlcrcDVjM0lzUE9JUk9jdHpyT1NPTkZFQldWVzQydVF6cGNhTGl6Vms5cDdsRnRaTWdtNE1aSEY2CjJQc0d3dXcwZEpXWFlpOEhqUFhwbjltQklrQTRqZ292ZjNOVVN2Yzk5Zm9yaDlUeU4wV3dNaW9TNjR6Q1g5ejIKMUtmdWdFTWNCZlVOdDMxbWtkbzk1U3NXQmh0T05odnhFdCtsS3g2VDVMSjBhZGJ3cWRrY29QNVRteFNSeG1HMQpEdWViZmZMcFJZSXFkK2RSSWZwc2d6L1k5Y3BxODNqT05RMS9GTHh6NlZNNVhNN0ExT1hrVkRyeVRaNlFlMTN3CmlxUDhDZ1VPaVNWcld3QXNIQW9BMGRXWmx4YjVMMkVaaTNMeE5FUW01dFptWmU2SkY2QmRlbzEvV1ZlajhFRGgKUVFJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0t
-find GK/app/ -name '*.js' -exec sed -i '' 's/${PUBLIC_KEY_ORIG}/$(base64 -i public_key.pem)/' {} \;
+export PUBLIC_KEY_NEW=$(base64 < public_key.pem | tr -d '\r\n')
+find GK/app/ -type f -name '*.js' \
+  -exec sed -i '' -e "s|${PUBLIC_KEY_ORIG}|${PUBLIC_KEY_NEW}|g" {} +
 ```
 
 ## Repack `app.asar` and Replace the Original
